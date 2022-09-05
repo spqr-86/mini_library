@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}
+  {% if book %}Редактирование книги{% else %}Добавить книгу{% endif %}
+{% endblock %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block header %}
+  <h1 class="main__title">
+    {% if book %}Редактирование книги{% else %}Создание книги{% endif %}
+  </h1>
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 w-50">
+  <form id="contactForm" method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type="submit" name="book-submit" class="btn btn-success btn-lg" />
+    {% if book %}<a style="margin-left: 2.5em" href="{% url 'book_delete' book.author.username book.id %}">Удалить</a>{% endif %}
+  </form>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#bookForm').submit(function () {
+      $.ajax({
+        data: $(this).serialize(),
+        type: $(this).attr('method'),
+        url:
+          {% if recipe %}
+            "{% url 'book_edit' book.author book.id %}"
+          {% else %}
+            "{% url 'book_new' %}"
+          {% endif %}>
+        success: function (response) {
+          alert("Книга " + response.title + " добавлена");
+        },
+        error: function (response) {
+          alert(response.responseJSON.errors);
+          console.log(response.responseJSON.errors)
+        }
+      });
+      return false;
+  });
+  })
+  </script>
+{% endblock %}

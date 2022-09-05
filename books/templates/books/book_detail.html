@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{{ book.name }}{% endblock %}
+{% load static %}
+{% block stylesheet %}
+{% endblock %}
+{% block content %}
+{% csrf_token %}
+  <div class="single-card" data-id="{{ book.id }}">
+    <div class="single-card__info">
+      <div class="single-card__header-info">
+        <h1 class="single-card__title">{{ book.title }}</h1>
+        <div class="single-card__section">
+          <h6 class="single-card__section-title">Автор:</h6>
+          <p class=" single-card__section-text">{{ book.author }}</p>
+        </div>
+        <div class="single-card__section">
+          <h6 class="single-card__section-title">Дата добавления</h6>
+          <p class=" single-card__section-text">{{ book.publication_date }}</p>
+        </div>
+        <div class="single-card__section">
+          <h4 class="single-card__section-title">Описание:</h4>
+          <p class=" single-card__section-text">{{ book.annotation }}</p>
+        </div>
+    </div>
+  </div>
+{% endblock %}
+

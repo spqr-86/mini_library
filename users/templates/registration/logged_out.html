@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Вы вышли из системы{% endblock %}
+{% load static %}
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'books/css/center-block.css' %}">
+{% endblock %}
+{% block content %}
+<h1 align=center>{% block center_header %}{% endblock %}
+    Вы вышли из системы
+</h1>
+ <div class="custom-button-block">
+   <a href="{% url 'index' %}">Перейти на главную</a>
+ </div>
+{% endblock %}
